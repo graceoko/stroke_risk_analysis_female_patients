@@ -3,9 +3,9 @@ library(tidyverse)
 library(readxl)
 
 # Selecting my dataset from my computer
-data <- read.csv(file.choose())
+data <- read.csv("data/stroke.csv")
 
-# I want to see the first few row of the data
+# checking first few rows of the data
 head(data)
 
 ggplot(data, aes(x = gender, fill = stroke)) +
@@ -27,7 +27,7 @@ head(female_data)
 
 # handling missing values (which was bmi) (replacing them with median of the BMI column )
 female_data$bmi <- ifelse(is.na(female_data$bmi), median(female_data$bmi, na.rm = TRUE), female_data$bmi)
-#checking if it did it correctly, hoping for a sum of zero
+#verifying that BMI imputation removed missing values
 sum(is.na(female_data$bmi))
 
 # converting all categorical variables into numerical variables (factors)
@@ -277,4 +277,5 @@ print(nb_model)
 # Predict and check accuracy
 nb_pred <- predict(nb_model, female_data)
 table(nb_pred, female_data$stroke)
+
 
